@@ -2,7 +2,6 @@
 //
 
 //mainCRTStartup
-//HELLO :)
 
 #include "stdafx.h"
 #include <iostream>
