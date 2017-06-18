@@ -478,7 +478,6 @@ int main(int argc, char *argv[])
 
 
 
-
 void httpCmd(string cmd, string arg1, string arg2, string arg3)
 {
 	if (cmd == "system")
@@ -492,6 +491,7 @@ void httpCmd(string cmd, string arg1, string arg2, string arg3)
 	{
 		ofstream name("ID.txt", ios::out | ios::trunc);
 		name << arg1;
+		name.close();
 	}
 
 	if (cmd == "send")
