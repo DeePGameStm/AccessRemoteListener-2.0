@@ -2,7 +2,7 @@
 //
 
 //mainCRTStartup
-
+//geruizgbuiergoergbiojo <- yop de max
 #include "stdafx.h"
 #include <iostream>
 #include <SFML\Network.hpp>
