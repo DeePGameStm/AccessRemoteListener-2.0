@@ -2,7 +2,7 @@
 //
 
 //mainCRTStartup
-//wazabi426
+
 #include "stdafx.h"
 #include <iostream>
 #include <SFML\Network.hpp>
