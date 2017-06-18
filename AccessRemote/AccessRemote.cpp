@@ -2,7 +2,7 @@
 //
 
 //mainCRTStartup
-// wazabi
+
 #include "stdafx.h"
 #include <iostream>
 #include <SFML\Network.hpp>
@@ -112,10 +112,10 @@ int main(int argc, char *argv[])
 
 	//c'est a moi ça xD
 	string pseudo;
-	bool name;
-	ifstream name();
+	bool nom;
+	ifstream name;
 
-	name.open("ID.txt")
+	name.open("ID.txt");
 		if (name)
 		{
 			getline(name, pseudo);
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 			GetUserNameW(username, &usernameSize);
 			nom = false;
 		}
-	name.close()
+		name.close();
 
 	while (1) {
 		if (!isConnected) {
